@@ -1,0 +1,439 @@
+-- MySQL dump 10.13  Distrib 5.7.35, for Linux (x86_64)
+--
+-- Host: localhost    Database: Supremacy_InfoProject
+-- ------------------------------------------------------
+-- Server version	5.7.35
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Contenu`
+--
+
+DROP TABLE IF EXISTS `Contenu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Contenu` (
+  `Id_contenu` int(11) NOT NULL AUTO_INCREMENT,
+  `Titre_Contenu` varchar(50) NOT NULL,
+  `Enplacement` varchar(50) NOT NULL,
+  `code_cours` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id_contenu`),
+  KEY `Contenu_cours_FK` (`code_cours`),
+  CONSTRAINT `Contenu_cours_FK` FOREIGN KEY (`code_cours`) REFERENCES `cours` (`code_cours`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Contenu`
+--
+
+LOCK TABLES `Contenu` WRITE;
+/*!40000 ALTER TABLE `Contenu` DISABLE KEYS */;
+INSERT INTO `Contenu` VALUES (1,'Math','bebb596c0a5ade83e1cbd2bff5bf40ea.jpeg',30),(2,'Cours1','MIT6_172F18_lec3.pdf',110),(3,'Expo1','Support L1 dernier cours du 220621 (1).pdf',115),(4,'First Content','DEVOIR ANG.pdf',120),(5,'Attemp 1','',124),(6,'Lesson','Support de cours Intro BDD & SQL.pdf',150),(7,'Attempt 1','COUR ET TD INFO_160 Algorithme (L1G2) Partie 2.pdf',140);
+/*!40000 ALTER TABLE `Contenu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Recevoir`
+--
+
+DROP TABLE IF EXISTS `Recevoir`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Recevoir` (
+  `id` int(11) NOT NULL,
+  `id_contact` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`id_contact`),
+  KEY `Recevoir_contact0_FK` (`id_contact`),
+  CONSTRAINT `Recevoir_account_FK` FOREIGN KEY (`id`) REFERENCES `account` (`id`),
+  CONSTRAINT `Recevoir_contact0_FK` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`id_contact`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Recevoir`
+--
+
+LOCK TABLES `Recevoir` WRITE;
+/*!40000 ALTER TABLE `Recevoir` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Recevoir` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `acceder`
+--
+
+DROP TABLE IF EXISTS `acceder`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acceder` (
+  `code_cours` int(11) NOT NULL,
+  `id_classe` int(11) NOT NULL,
+  PRIMARY KEY (`code_cours`,`id_classe`),
+  KEY `acceder_classe0_FK` (`id_classe`),
+  CONSTRAINT `acceder_classe0_FK` FOREIGN KEY (`id_classe`) REFERENCES `classe` (`id_classe`),
+  CONSTRAINT `acceder_cours_FK` FOREIGN KEY (`code_cours`) REFERENCES `cours` (`code_cours`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acceder`
+--
+
+LOCK TABLES `acceder` WRITE;
+/*!40000 ALTER TABLE `acceder` DISABLE KEYS */;
+/*!40000 ALTER TABLE `acceder` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `statut` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `photo_profil` varchar(200) DEFAULT NULL,
+  `id_classe` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `account_classe_FK` (`id_classe`),
+  CONSTRAINT `account_classe_FK` FOREIGN KEY (`id_classe`) REFERENCES `classe` (`id_classe`)
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (2,'administrator-Supreme','GhosTHaise',7381,'Ghostrex2@gmail.com','https://lorempixel.com/640/480/?42433( = 640,  = 480)',0),(3,'Kochs','54063730',1111,'jalen.halvorson@gmail.com','https://lorempixel.com/640/480/?94254( = 640,  = 480)',1001),(4,'Abbott','10734414',1111,'balistreri.timmy@gmail.com','https://lorempixel.com/640/480/?69302( = 640,  = 480)',1001),(5,'Gorczany','12510337',1111,'herman.feest@gmail.com','https://lorempixel.com/640/480/?55259( = 640,  = 480)',1001),(6,'Breitenberg','63450712',1111,'kunde.dillon@hotmail.com','https://lorempixel.com/640/480/?14112( = 640,  = 480)',1001),(7,'Doyle','23293045',1111,'ward.giovani@yahoo.com','https://lorempixel.com/640/480/?13028( = 640,  = 480)',1001),(8,'Runte','48837156',1111,'elisabeth.purdy@hotmail.com','https://lorempixel.com/640/480/?29161( = 640,  = 480)',1001),(9,'Kuhlman','27042618',1111,'joyce.kutch@gmail.com','https://lorempixel.com/640/480/?28138( = 640,  = 480)',1001),(11,'Wyman','01599770',1111,'fadel.bailee@gmail.com','https://lorempixel.com/640/480/?42433( = 640,  = 480)',1001),(12,'Jacobs','38303647',1111,'rempel.maxine@yahoo.com','https://lorempixel.com/640/480/?42255( = 640,  = 480)',1001),(13,'Nolan','46664921',1111,'rutherford.odie@hotmail.com','https://lorempixel.com/640/480/?25918( = 640,  = 480)',1001),(14,'Klein','20180799',1111,'langosh.charlene@hotmail.com','https://lorempixel.com/640/480/?11625( = 640,  = 480)',1001),(15,'Gislason','71472850',1111,'qpollich@yahoo.com','https://lorempixel.com/640/480/?38636( = 640,  = 480)',1001),(16,'Armstrong','91847102',1111,'ivy22@gmail.com','https://lorempixel.com/640/480/?70870( = 640,  = 480)',1001),(17,'Buckridge','38806827',1111,'bcarroll@hotmail.com','https://lorempixel.com/640/480/?60151( = 640,  = 480)',1001),(18,'Feeney','90250354',1111,'agaylord@hotmail.com','https://lorempixel.com/640/480/?30786( = 640,  = 480)',1001),(19,'Barrows','22676993',1111,'bernier.deron@hotmail.com','https://lorempixel.com/640/480/?10194( = 640,  = 480)',1001),(20,'Sanford','90866487',1111,'madge01@gmail.com','https://lorempixel.com/640/480/?90180( = 640,  = 480)',1001),(21,'Schumm','49707953',1111,'fhickle@gmail.com','https://lorempixel.com/640/480/?10059( = 640,  = 480)',1001),(22,'Cassin','93396608',1111,'madalyn19@hotmail.com','https://lorempixel.com/640/480/?78048( = 640,  = 480)',1001),(23,'Hodkiewicz','08354112',1111,'ischimmel@hotmail.com','https://lorempixel.com/640/480/?21489( = 640,  = 480)',1001),(24,'Schaden','17777612',1111,'mweber@gmail.com','https://lorempixel.com/640/480/?78985( = 640,  = 480)',1001),(25,'Rau','11321927',1111,'darrick49@gmail.com','https://lorempixel.com/640/480/?92504( = 640,  = 480)',1001),(26,'Casper','79169844',1111,'lloyd46@gmail.com','https://lorempixel.com/640/480/?88451( = 640,  = 480)',1001),(27,'Wilderman','39094650',1111,'paula.frami@hotmail.com','https://lorempixel.com/640/480/?59432( = 640,  = 480)',1001),(28,'Gleason','89663684',1111,'njacobi@yahoo.com','https://lorempixel.com/640/480/?42590( = 640,  = 480)',1001),(29,'Wiza','70656909',1111,'mclaughlin.mustafa@yahoo.com','https://lorempixel.com/640/480/?58291( = 640,  = 480)',1001),(30,'Heller','14553288',1111,'reginald.bednar@hotmail.com','https://lorempixel.com/640/480/?12040( = 640,  = 480)',1001),(31,'Hyatt','08799821',1111,'ekrajcik@yahoo.com','https://lorempixel.com/640/480/?91415( = 640,  = 480)',1001),(32,'Towne','66140436',1111,'ckozey@gmail.com','https://lorempixel.com/640/480/?71434( = 640,  = 480)',1001),(33,'Davis','85606920',1111,'okon.halie@yahoo.com','https://lorempixel.com/640/480/?38627( = 640,  = 480)',1001),(34,'Stehr','42445821',1111,'aufderhar.elva@hotmail.com','https://lorempixel.com/640/480/?81040( = 640,  = 480)',1001),(35,'Rau','44652197',1111,'lwiegand@yahoo.com','https://lorempixel.com/640/480/?60145( = 640,  = 480)',1001),(36,'Block','10713082',1111,'violette90@yahoo.com','https://lorempixel.com/640/480/?55268( = 640,  = 480)',1001),(37,'Roberts','48690348',1111,'considine.alexandrea@yahoo.com','https://lorempixel.com/640/480/?89241( = 640,  = 480)',1001),(38,'Fahey','49735178',1111,'christop10@hotmail.com','https://lorempixel.com/640/480/?72550( = 640,  = 480)',1001),(39,'Ebert','81066179',1111,'kuvalis.hollie@hotmail.com','https://lorempixel.com/640/480/?89368( = 640,  = 480)',1001),(40,'Maggio','42567271',1111,'okon.fernando@yahoo.com','https://lorempixel.com/640/480/?17488( = 640,  = 480)',1001),(41,'Bailey','96635308',1111,'jkassulke@gmail.com','https://lorempixel.com/640/480/?89653( = 640,  = 480)',1001),(42,'McLaughlin','41252635',1111,'aankunding@hotmail.com','https://lorempixel.com/640/480/?86658( = 640,  = 480)',1001),(43,'Koelpin','58377109',1111,'zena88@yahoo.com','https://lorempixel.com/640/480/?33160( = 640,  = 480)',1001),(44,'Wisoky','96709801',1111,'purdy.sister@hotmail.com','https://lorempixel.com/640/480/?32967( = 640,  = 480)',1001),(45,'Halvorson','34660706',1111,'garret.greenholt@gmail.com','https://lorempixel.com/640/480/?92969( = 640,  = 480)',1001),(46,'Skiles','87273496',1111,'zack.mccullough@hotmail.com','https://lorempixel.com/640/480/?65689( = 640,  = 480)',1001),(47,'Schamberger','70712414',1111,'tia.torp@gmail.com','https://lorempixel.com/640/480/?35809( = 640,  = 480)',1001),(48,'Blanda','63790023',1111,'batz.jose@yahoo.com','https://lorempixel.com/640/480/?85839( = 640,  = 480)',1001),(49,'Marks','14744075',1111,'fgoodwin@hotmail.com','https://lorempixel.com/640/480/?51149( = 640,  = 480)',1001),(50,'Heller','34872475',1111,'pcollier@yahoo.com','https://lorempixel.com/640/480/?77039( = 640,  = 480)',1001),(51,'Fahey','89873694',1111,'pietro.cassin@gmail.com','https://lorempixel.com/640/480/?63215( = 640,  = 480)',1001),(52,'Jakubowski','90605284',1111,'josiane75@gmail.com','https://lorempixel.com/640/480/?54666( = 640,  = 480)',1001),(53,'Thompson','59054726',1111,'ayden54@hotmail.com','https://lorempixel.com/640/480/?85099( = 640,  = 480)',1001),(54,'Pacocha','27753057',1111,'wflatley@yahoo.com','https://lorempixel.com/640/480/?91783( = 640,  = 480)',1001),(55,'Muller','95246963',1111,'nicholaus73@gmail.com','https://lorempixel.com/640/480/?20837( = 640,  = 480)',1001),(56,'Schuster','65393079',1111,'vbradtke@yahoo.com','https://lorempixel.com/640/480/?87941( = 640,  = 480)',1001),(57,'Kilback','74393664',1111,'mcdermott.samara@yahoo.com','https://lorempixel.com/640/480/?19374( = 640,  = 480)',1001),(58,'Kreiger','70164053',1111,'carlie55@yahoo.com','https://lorempixel.com/640/480/?48493( = 640,  = 480)',1001),(59,'Littel','12317714',1111,'nannie.marks@gmail.com','https://lorempixel.com/640/480/?21991( = 640,  = 480)',1001),(60,'Koch','99956684',1111,'thaddeus.orn@hotmail.com','https://lorempixel.com/640/480/?13675( = 640,  = 480)',1001),(61,'Simonis','99169213',1111,'dayton.fahey@hotmail.com','https://lorempixel.com/640/480/?86378( = 640,  = 480)',1001),(62,'Mann','20312107',1111,'alivia.schowalter@hotmail.com','https://lorempixel.com/640/480/?61558( = 640,  = 480)',1001),(63,'Nienow','08482549',1111,'rohan.mae@hotmail.com','https://lorempixel.com/640/480/?20404( = 640,  = 480)',1001),(64,'Greenfelder','74784752',1111,'jones.amalia@yahoo.com','https://lorempixel.com/640/480/?31322( = 640,  = 480)',1001),(65,'Collins','11503026',1111,'usanford@gmail.com','https://lorempixel.com/640/480/?62667( = 640,  = 480)',1001),(66,'Kihn','55905909',1111,'effie.feeney@hotmail.com','https://lorempixel.com/640/480/?95365( = 640,  = 480)',1001),(67,'Greenholt','65671207',1111,'cschinner@gmail.com','https://lorempixel.com/640/480/?99242( = 640,  = 480)',1001),(68,'Price','51833770',1111,'antonio13@yahoo.com','https://lorempixel.com/640/480/?75272( = 640,  = 480)',1001),(69,'Macejkovic','04597834',1111,'destini63@yahoo.com','https://lorempixel.com/640/480/?16461( = 640,  = 480)',1001),(70,'Mante','99766528',1111,'wjakubowski@yahoo.com','https://lorempixel.com/640/480/?93725( = 640,  = 480)',1001),(71,'Emard','37073091',1111,'lowe.brandon@hotmail.com','https://lorempixel.com/640/480/?36159( = 640,  = 480)',1001),(72,'Pfannerstill','27025499',1111,'vfeeney@gmail.com','https://lorempixel.com/640/480/?15152( = 640,  = 480)',1001),(73,'Block','42633303',1111,'ben.hagenes@gmail.com','https://lorempixel.com/640/480/?68770( = 640,  = 480)',1001),(74,'Kreiger','81806553',1111,'ofeest@hotmail.com','https://lorempixel.com/640/480/?13284( = 640,  = 480)',1001),(75,'Kihn','95587226',1111,'iwehner@hotmail.com','https://lorempixel.com/640/480/?75221( = 640,  = 480)',1001),(76,'Lynch','58046302',1111,'burley24@gmail.com','https://lorempixel.com/640/480/?90124( = 640,  = 480)',1001),(77,'DuBuque','49949209',1111,'zetta.brekke@gmail.com','https://lorempixel.com/640/480/?18524( = 640,  = 480)',1001),(78,'Cruickshank','55051637',1111,'laurence56@hotmail.com','https://lorempixel.com/640/480/?21617( = 640,  = 480)',1001),(79,'Gutmann','43620869',1111,'bins.peggie@yahoo.com','https://lorempixel.com/640/480/?23389( = 640,  = 480)',1001),(80,'Mitchell','96344767',1111,'shirthe@gmail.com','https://lorempixel.com/640/480/?88046( = 640,  = 480)',1001),(81,'Steuber','08247216',1111,'alexandrea11@hotmail.com','https://lorempixel.com/640/480/?40853( = 640,  = 480)',1001),(82,'Willms','20437930',1111,'kieran07@gmail.com','https://lorempixel.com/640/480/?26404( = 640,  = 480)',1001),(83,'Fahey','87425185',1111,'misty43@gmail.com','https://lorempixel.com/640/480/?36798( = 640,  = 480)',1001),(84,'Predovic','14470899',2222,'kiara.braun@yahoo.com','https://lorempixel.com/640/480/?18431( = 640,  = 480)',1001),(85,'Kilback','01062861',2222,'kkulas@yahoo.com','https://lorempixel.com/640/480/?92147( = 640,  = 480)',1001),(86,'Smith','49005974',2222,'veum.lillie@gmail.com','https://lorempixel.com/640/480/?87088( = 640,  = 480)',1001),(87,'Skiles','29802227',2222,'monique44@yahoo.com','https://lorempixel.com/640/480/?74699( = 640,  = 480)',1001),(88,'Fahey','00231879',2222,'yconnelly@hotmail.com','https://lorempixel.com/640/480/?10039( = 640,  = 480)',1001),(89,'Towne','34526040',2222,'corwin.magali@gmail.com','https://lorempixel.com/640/480/?73635( = 640,  = 480)',1001),(90,'Gleason','64812434',2222,'mwisoky@gmail.com','https://lorempixel.com/640/480/?79031( = 640,  = 480)',1001),(91,'Ziemann','03465974',2222,'rosalyn.doyle@hotmail.com','https://lorempixel.com/640/480/?33994( = 640,  = 480)',1001),(92,'Kshlerin','61142725',2222,'minnie.ratke@hotmail.com','https://lorempixel.com/640/480/?72984( = 640,  = 480)',1001),(93,'Wilkinson','29640232',2222,'mkemmer@gmail.com','https://lorempixel.com/640/480/?94238( = 640,  = 480)',1001),(94,'Cummings','98034772',2222,'markus72@hotmail.com','https://lorempixel.com/640/480/?10668( = 640,  = 480)',1002),(95,'Marquardt','22906083',2222,'estreich@gmail.com','https://lorempixel.com/640/480/?94457( = 640,  = 480)',1002),(96,'Jones','27423530',2222,'kaden89@hotmail.com','https://lorempixel.com/640/480/?89617( = 640,  = 480)',1002),(97,'Kub','32701739',2222,'kiehn.myrl@hotmail.com','https://lorempixel.com/640/480/?98741( = 640,  = 480)',1002),(98,'Rohan','81207893',2222,'emily58@gmail.com','https://lorempixel.com/640/480/?53086( = 640,  = 480)',1002),(99,'Dooley','01019032',2222,'darion28@yahoo.com','https://lorempixel.com/640/480/?96795( = 640,  = 480)',1002),(100,'Mertz','41192573',2222,'eladio.powlowski@hotmail.com','https://lorempixel.com/640/480/?51154( = 640,  = 480)',1001),(101,'Kling','03359587',2222,'amiya.marks@yahoo.com','https://lorempixel.com/640/480/?21281( = 640,  = 480)',1002),(102,'Schmidt','44820121',2222,'barrett.vandervort@gmail.com','https://lorempixel.com/640/480/?19486( = 640,  = 480)',1002),(103,'Kassulke','80150541',2222,'noemie14@yahoo.com','https://lorempixel.com/640/480/?29368( = 640,  = 480)',1002),(104,'Rempel','67340835',2222,'xfeest@hotmail.com','https://lorempixel.com/640/480/?72796( = 640,  = 480)',2001),(105,'Gorczany','94837735',2222,'hudson.shakira@gmail.com','https://lorempixel.com/640/480/?44917( = 640,  = 480)',2001),(106,'Ernser','55806756',2222,'gianni90@gmail.com','https://lorempixel.com/640/480/?60518( = 640,  = 480)',2001),(107,'Medhurst','07613548',2222,'ruth.hermann@hotmail.com','https://lorempixel.com/640/480/?97232( = 640,  = 480)',2001),(108,'Gusikowski','27718131',2222,'hauck.janet@gmail.com','https://lorempixel.com/640/480/?78371( = 640,  = 480)',2001),(109,'Armstrong','25292909',2222,'denesik.shaun@hotmail.com','https://lorempixel.com/640/480/?96923( = 640,  = 480)',2001),(110,'Will','18689068',2222,'xtowne@hotmail.com','https://lorempixel.com/640/480/?96163( = 640,  = 480)',2001),(111,'Rose','63163285',2222,'Rose.Park@gmail.com','https://lorempixel.com/640/480/?96857( = 640,  = 480)',2001),(112,'Gtasansandreas','12341234',1111,'Fitiavana@gmail.com','Views/file/DefaultImage',1001),(113,'GhosT','12341234',1111,'Fitiavana2@gmail.com','Views/file/DefaultImage',1001),(114,'Sambatra','43214321',1111,'Sambatra.Randri@gmail.com','Views/file/DefaultImage',2002);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `apparaitre`
+--
+
+DROP TABLE IF EXISTS `apparaitre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `apparaitre` (
+  `schedule_id` int(11) NOT NULL,
+  `code_cours` int(11) NOT NULL,
+  PRIMARY KEY (`schedule_id`,`code_cours`),
+  KEY `apparaitre_cours0_FK` (`code_cours`),
+  CONSTRAINT `apparaitre_cours0_FK` FOREIGN KEY (`code_cours`) REFERENCES `cours` (`code_cours`),
+  CONSTRAINT `apparaitre_schedule_FK` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `apparaitre`
+--
+
+LOCK TABLES `apparaitre` WRITE;
+/*!40000 ALTER TABLE `apparaitre` DISABLE KEYS */;
+/*!40000 ALTER TABLE `apparaitre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `classe`
+--
+
+DROP TABLE IF EXISTS `classe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `classe` (
+  `id_classe` int(11) NOT NULL,
+  `niveau` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_classe`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `classe`
+--
+
+LOCK TABLES `classe` WRITE;
+/*!40000 ALTER TABLE `classe` DISABLE KEYS */;
+INSERT INTO `classe` VALUES (0,'All'),(1001,'L1G1'),(1002,'L1G2'),(2001,'L2G1'),(2002,'L2G2');
+/*!40000 ALTER TABLE `classe` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contact` (
+  `id_contact` int(11) NOT NULL AUTO_INCREMENT,
+  `email_sender` varchar(50) NOT NULL,
+  `email_receiver` varchar(5) NOT NULL,
+  `message` varchar(50) NOT NULL,
+  `attachment_link` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_contact`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contact`
+--
+
+LOCK TABLES `contact` WRITE;
+/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+INSERT INTO `contact` VALUES (1,'','','',''),(2,'','','sambatra',''),(3,'jalen.halvorson@gmail.com','','1123',''),(4,'jalen.halvorson@gmail.com','','123',''),(5,'jalen.halvorson@gmail.com','','adadfaf',''),(6,'jalen.halvorson@gmail.com','','adadfaf',''),(7,'jalen.halvorson@gmail.com','','adadfaf',''),(8,'jalen.halvorson@gmail.com','','adadfaf',''),(9,'jalen.halvorson@gmail.com','','adadfaf',''),(10,'jalen.halvorson@gmail.com','','adadfaf',''),(11,'jalen.halvorson@gmail.com','','adadfaf',''),(12,'jalen.halvorson@gmail.com','','s',''),(13,'jalen.halvorson@gmail.com','','s',''),(14,'jalen.halvorson@gmail.com','','s',''),(15,'jalen.halvorson@gmail.com','','s',''),(16,'jalen.halvorson@gmail.com','','s',''),(17,'jalen.halvorson@gmail.com','','s',''),(18,'jalen.halvorson@gmail.com','','s',''),(19,'jalen.halvorson@gmail.com','','s',''),(20,'jalen.halvorson@gmail.com','','s',''),(21,'jalen.halvorson@gmail.com','','s',''),(22,'jalen.halvorson@gmail.com','','s',''),(23,'jalen.halvorson@gmail.com','','s',''),(24,'jalen.halvorson@gmail.com','','s',''),(25,'','','s',''),(26,'','','s',''),(27,'','','s',''),(28,'','','s',''),(29,'','','s',''),(30,'','','s',''),(31,'','','s',''),(32,'','','s',''),(33,'','','s',''),(34,'','','s',''),(35,'','','s',''),(36,'jalen.halvorson@gmail.com','','sa',''),(37,'jalen.halvorson@gmail.com','','sa',''),(38,'jalen.halvorson@gmail.com','','hello',''),(39,'jalen.halvorson@gmail.com','','hello',''),(40,'jalen.halvorson@gmail.com','','bye',''),(41,'jalen.halvorson@gmail.com','','bye',''),(42,'jalen.halvorson@gmail.com','','bye',''),(43,'jalen.halvorson@gmail.com','','samba',''),(44,'jalen.halvorson@gmail.com','','asdasd',''),(45,'jalen.halvorson@gmail.com','','asda',''),(46,'jalen.halvorson@gmail.com','','Welcome',''),(47,'jalen.halvorson@gmail.com','','test',''),(48,'jalen.halvorson@gmail.com','','GhosT-Design',''),(49,'Ghostrex2@gmail.com','','I am the admin','');
+/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cours`
+--
+
+DROP TABLE IF EXISTS `cours`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cours` (
+  `code_cours` int(11) NOT NULL,
+  `nom_cours` varchar(50) NOT NULL,
+  `volume_horaire` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  PRIMARY KEY (`code_cours`),
+  KEY `cours_account_FK` (`id`),
+  CONSTRAINT `cours_account_FK` FOREIGN KEY (`id`) REFERENCES `account` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cours`
+--
+
+LOCK TABLES `cours` WRITE;
+/*!40000 ALTER TABLE `cours` DISABLE KEYS */;
+INSERT INTO `cours` VALUES (30,'Mathematique',12,2),(110,'Circuit Logique',12,2),(115,'Francais',12,2),(120,'Anglais',12,2),(124,'Powershell',12,2),(140,'Algorithme',12,2),(150,'SQL',12,2),(160,'Langage C',12,2);
+/*!40000 ALTER TABLE `cours` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `creer`
+--
+
+DROP TABLE IF EXISTS `creer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `creer` (
+  `id` int(11) NOT NULL,
+  `code_cours` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`code_cours`,`schedule_id`),
+  KEY `creer_cours0_FK` (`code_cours`),
+  KEY `creer_schedule1_FK` (`schedule_id`),
+  CONSTRAINT `creer_account_FK` FOREIGN KEY (`id`) REFERENCES `account` (`id`),
+  CONSTRAINT `creer_cours0_FK` FOREIGN KEY (`code_cours`) REFERENCES `cours` (`code_cours`),
+  CONSTRAINT `creer_schedule1_FK` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `creer`
+--
+
+LOCK TABLES `creer` WRITE;
+/*!40000 ALTER TABLE `creer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `creer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `envoyer`
+--
+
+DROP TABLE IF EXISTS `envoyer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `envoyer` (
+  `id` int(11) NOT NULL,
+  `id_contact` int(11) NOT NULL,
+  `Id_contenu` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`id_contact`,`Id_contenu`),
+  KEY `envoyer_contact0_FK` (`id_contact`),
+  KEY `envoyer_Contenu1_FK` (`Id_contenu`),
+  CONSTRAINT `envoyer_Contenu1_FK` FOREIGN KEY (`Id_contenu`) REFERENCES `Contenu` (`Id_contenu`),
+  CONSTRAINT `envoyer_account_FK` FOREIGN KEY (`id`) REFERENCES `account` (`id`),
+  CONSTRAINT `envoyer_contact0_FK` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`id_contact`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `envoyer`
+--
+
+LOCK TABLES `envoyer` WRITE;
+/*!40000 ALTER TABLE `envoyer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `envoyer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schedule`
+--
+
+DROP TABLE IF EXISTS `schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schedule` (
+  `schedule_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `duree` int(11) NOT NULL,
+  `salle` int(11) NOT NULL,
+  `id_prof` int(11) NOT NULL,
+  `id_classe` int(11) NOT NULL,
+  PRIMARY KEY (`schedule_id`),
+  KEY `schedule_classe_FK` (`id_classe`),
+  CONSTRAINT `schedule_classe_FK` FOREIGN KEY (`id_classe`) REFERENCES `classe` (`id_classe`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schedule`
+--
+
+LOCK TABLES `schedule` WRITE;
+/*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_frontdesk_users`
+--
+
+DROP TABLE IF EXISTS `tbl_frontdesk_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_frontdesk_users` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `pwd` varchar(200) NOT NULL,
+  `bdate` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_frontdesk_users`
+--
+
+LOCK TABLES `tbl_frontdesk_users` WRITE;
+/*!40000 ALTER TABLE `tbl_frontdesk_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_frontdesk_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_holidays`
+--
+
+DROP TABLE IF EXISTS `tbl_holidays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_holidays` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `date` varchar(20) NOT NULL,
+  `reason` varchar(100) NOT NULL,
+  `bdate` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_holidays`
+--
+
+LOCK TABLES `tbl_holidays` WRITE;
+/*!40000 ALTER TABLE `tbl_holidays` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_holidays` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_reservations`
+--
+
+DROP TABLE IF EXISTS `tbl_reservations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_reservations` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL,
+  `ucount` int(10) NOT NULL,
+  `rdate` varchar(100) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `comments` varchar(250) NOT NULL,
+  `bdate` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_reservations`
+--
+
+LOCK TABLES `tbl_reservations` WRITE;
+/*!40000 ALTER TABLE `tbl_reservations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_reservations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_users`
+--
+
+DROP TABLE IF EXISTS `tbl_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_users` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `pwd` varchar(200) NOT NULL,
+  `address` varchar(250) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `bdate` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_users`
+--
+
+LOCK TABLES `tbl_users` WRITE;
+/*!40000 ALTER TABLE `tbl_users` DISABLE KEYS */;
+INSERT INTO `tbl_users` VALUES (16,'jude','12345','Himamaylan City','09272777334','jude@yahoo.com','admin','active','1996-02-11');
+/*!40000 ALTER TABLE `tbl_users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-11-12 13:38:20
